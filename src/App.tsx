@@ -8,8 +8,16 @@ import Header from "./components/Header"
 import Login from "./Pages/Login"
 import Register from "./Pages/Register"
 import ForgotPassword from "./Pages/ForgotPassword"
+import useAuthStore from './stores/authStore';
+import { useEffect } from "react"
 
 function App() {
+  // initialize state
+  const loadUserFromStorage = useAuthStore((state) => state.loadUserFromStorage);
+
+  useEffect(() => {
+    loadUserFromStorage();
+  }, [loadUserFromStorage]);
   return (
     <div className="App">
       <Routes>
