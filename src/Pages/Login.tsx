@@ -1,20 +1,25 @@
-import { Paper, styled } from "@mui/material";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 
 function Login() {
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
+  const handleLoginSuccess = (response: any) => {
+    console.log("Google login response:", response);
+    // Use the response to authenticate with your backend.
+  };
+  const handleLoginFailure = (response: any = "There was a Login error.") => {
+    console.log("Google login response:", response);
+    // Handle the login failure.
+  };
+
+
   return (
     <div className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
         <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-          <h1 className="title-font font-medium text-3xl text-gray-900">Slow-carb next level shoindcgoitch ethical authentic, poko scenester</h1>
-          <p className="leading-relaxed mt-4">Poke slow-carb mixtape knausgaard, typewriter street art gentrify hammock starladder roathse. Craies vegan tousled etsy austin.</p>
+          <h1 className="title-font font-medium text-3xl text-gray-900">All people are knowing, growing, creating.</h1>
+          <p className="leading-relaxed mt-4">
+          Yet we are all here to read, learn and teach.
+          </p>
         </div>
         <div className="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
           <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Login</h2>
@@ -33,6 +38,10 @@ function Login() {
             <Link to="/register" className="text-indigo-500 inline-flex items-center mt-3">Register</Link>
             <Link to="/forgot-password" className="text-indigo-500 inline-flex items-center mt-3">Forgot Password</Link>
           </span>
+          <GoogleLogin
+            onSuccess={handleLoginSuccess}
+            onError={handleLoginFailure}
+          />
         </div>
       </div>
     </div>
