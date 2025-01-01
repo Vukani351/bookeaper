@@ -5,7 +5,7 @@ import tw from "tailwind-styled-components";
 const ArticlesContainer = tw.div`container px-5 my-10 mx-auto animate__animated animate__bounceInUp`;
 const IntroContainer = tw.div`flex flex-wrap w-full mb-20`;
 const ArticlesBody = tw.div`flex flex-wrap -m-4`;
-const Articles = () => {
+const Books = () => {
   return <div className="text-gray-600 body-font">
       <ArticlesContainer>
         <IntroContainer className="">
@@ -53,4 +53,4 @@ const Articles = () => {
     </div>
 };
 
-export default Articles;
+export default Books;

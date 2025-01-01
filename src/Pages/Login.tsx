@@ -21,7 +21,6 @@ function Login() {
     try {
       await login(formData.email, formData.password);
       // Redirect to a protected route
-      window.location.href = '/dashboard';
     } catch (err: any) {
       setError(err.message || 'An error occurred');
     }
@@ -35,8 +34,9 @@ function Login() {
   };
 
   const handleLoginFailure = (response: any = "There was a Login error.") => {
-    console.log("Google login response:", response);
     // Handle the login failure.
+    console.log("Google login response:", response);
+    setError(response.error);
   };
 
   return (

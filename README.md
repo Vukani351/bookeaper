@@ -1,7 +1,6 @@
 # Library Front End
 
 ## M. V. P
---------
 
 This application will help me keep collections of books I intend to purchase and track where I could purchase them. It also allows me to keep records of who is borrowing books and when they must return them.
 

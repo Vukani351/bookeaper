@@ -8,6 +8,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import Socials from "./Socials";
+import useAuthStore from '../stores/authStore';
 
 export default function Header() {
   const Nav = tw.nav`flex justify-between text-base align-center`;
@@ -22,20 +23,33 @@ export default function Header() {
 }
 
 function HeaderLG () {
+  
+  const { user, logout } = useAuthStore();
+  const handleLogout = () => {
+    logout();
+    // Redirect to the login page
+    window.location.href = '/login';
+  };
+
   return <header className="headerLG text-gray-600 body-font bg-gray-200">
   <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
-      <span className="ml-3 text-xl">Library</span>
-    </a>
+    <Link to="/" className="mr-5 hover:text-gray-900">
+      <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+        <span className="ml-3 text-xl">Library</span>
+      </a>
+    </Link>
     <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
       <Link to="/login" className="mr-5 hover:text-gray-900">Login</Link>
       {/* <Link to="/libraries" className="mr-5 hover:text-gray-900">Libraries</Link> */}
       {/* <Link to="reviews" className="mr-5 hover:text-gray-900">Reviews</Link> */}
       <Link to="/about" className="mr-5 hover:text-gray-900">About</Link>
       <Link to="/contact " className="mr-5 hover:text-gray-900">Contact</Link>
+      <Link to="# " className="mr-5 hover:text-gray-900" onClick={handleLogout}>
+        Logout
+      </Link>
     </nav>
     <span className="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
       {/* only open this when the socials are connected */}
@@ -53,6 +67,13 @@ function HeaderSM() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const { user, logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+    // Redirect to the login page
+    window.location.href = '/login';
   };
 
   return (
@@ -98,6 +119,11 @@ function HeaderSM() {
         <MenuItem onClick={handleClose}>
           <Link to="about">
             <Button variant="text">about</Button>
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleLogout}>
+          <Link to="#">
+            <Button variant="text">Logout</Button>
           </Link>
         </MenuItem>
       </Menu>

@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom"
 import About from "./Pages/About"
 import Home from "./Pages/Home"
 import Contact from "./Pages/Contact"
-import Articles from "./Pages/Articles"
+import Books from "./Pages/Books"
 import Header from "./components/Header"
 import Login from "./Pages/Login"
 import Register from "./Pages/Register"
@@ -25,7 +25,7 @@ function App() {
         <Route path="/login" element={ <Login/> } />
         <Route path="/forgot-password" element={ <ForgotPassword/> } />
         <Route path="/register" element={ <Register/> } />
-        <Route path="articles" element={ <Articles/> } />
+        <Route path="books" element={ <Books/> } />
         <Route path="about" element={ <About/> } />
         <Route path="contact" element={ <Contact/> } />
       </Routes>

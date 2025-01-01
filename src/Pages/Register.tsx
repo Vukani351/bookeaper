@@ -1,20 +1,27 @@
 import { Paper, styled } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useAuthStore from "../stores/authStore";
 
 function Register() {
-  const { register } = useAuthStore();
+  const { register, isAuthenticated } = useAuthStore();
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
-  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  // test if user is logged in or not:
+  useEffect(() => {
+    if (isAuthenticated) {
+      window.location.href = '/books';
+    }
+  }, [isAuthenticated]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
