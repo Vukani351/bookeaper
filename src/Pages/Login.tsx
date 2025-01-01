@@ -1,11 +1,38 @@
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 
+// for testing - move this to store function when it works the nstore the response in a cookie or storage.
+import axios from 'axios';
+
 function Login() {
-  const handleLoginSuccess = (response: any) => {
-    console.log("Google login response:", response);
+  const handleLoginSuccess = async (googleResponse: any) => {
+    const token = googleResponse.credential; // Google token
+    console.log("Google login response:", googleResponse);
     // Use the response to authenticate with your backend.
+
+    // for testing - move this to store function when it works the nstore the response in a cookie or storage.
+    try {
+      const response = await axios.get('http://localhost:3000/api/auth/google', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      console.log('Login success:', response.data);
+  
+      // Save the JWT token in localStorage or cookies
+      localStorage.setItem('token', response.data.token);
+  
+      // Redirect to a protected route
+      window.location.href = '/dashboard';
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Login failed:', error.response?.data || error.message);
+      } else {
+        console.error('Login failed:', error);
+      }
+    }
   };
+
   const handleLoginFailure = (response: any = "There was a Login error.") => {
     console.log("Google login response:", response);
     // Handle the login failure.
