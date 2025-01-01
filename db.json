@@ -1,0 +1,51 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "articles": [
+    {
+       "id":3,
+       "link":"/idnum",
+       "name":"Guinevere",
+       "pubDate":"28/09/2022",
+       "title":"lacus at velit vivamus vel nulla",
+       "introduction":"sed ante vivamus tortor duis mattis egestas metus",
+       "body":"ultrices libero non mattis pulvinar nulla pede ullamcorper augue a",
+       "conclusion":"platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum"
+    },
+    {
+       "id":1,
+       "link":"/idnum",
+       "name":"Sharlene",
+       "pubDate":"04/10/2022",
+       "title":"mattis pulvinar nulla pede ullamcorper",
+       "introduction":"mollis molestie lorem quisque ut erat curabitur gravida nisi",
+       "body":"condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum",
+       "conclusion":"vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien"
+    },
+    {
+       "id":2,
+       "link":"/idnum",
+       "name":"Menard",
+       "pubDate":"19/05/2022",
+       "title":"blandit ultrices enim lorem ipsum",
+       "introduction":"cubilia curae donec pharetra magna vestibulum aliquet ultrices",
+       "body":"suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris",
+       "conclusion":"nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem"
+    }
+]
+}

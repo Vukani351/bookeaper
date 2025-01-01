@@ -1,0 +1,34 @@
+.headerSM {
+  display: none;
+}
+
+.headerLG {
+  display: flex;
+}
+
+.all {
+  // border: red solid 5px;
+  // width: 50%;
+  // margin-top: 1em;
+}
+
+.home {
+  position: static;
+}
+
+.links {
+  margin-top: 1em;
+  max-width: 90vw;
+  nav{
+    width: 90vw;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  .headerLG {
+    display: none;
+  }
+  .headerSM {
+    display: block;
+  }
+}
