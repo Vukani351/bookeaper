@@ -1,11 +1,18 @@
 import Button from "@mui/material/Button";
 import tw from "tailwind-styled-components";
-
+import useBookStore from '../stores/bookStore';
+import { useState, useEffect } from "react";
 
 const ArticlesContainer = tw.div`container px-5 my-10 mx-auto animate__animated animate__bounceInUp`;
 const IntroContainer = tw.div`flex flex-wrap w-full mb-20`;
 const ArticlesBody = tw.div`flex flex-wrap -m-4`;
-const Books = () => {
+
+function Books (){
+  // const { getBooks, getCurrentBook } = useBookStore();
+  // useEffect(() => {
+  //   const books = getBooks(0);
+  //   console.log("Book response: ", getCurrentBook());
+  // }, []);
   return <div className="text-gray-600 body-font">
       <ArticlesContainer>
         <IntroContainer className="">
