@@ -5,10 +5,8 @@ import useBookStore from '../stores/useBookStore';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import LoadingDrip from "../components/LoadingDrip";
   
-const ArticlesContainer = tw.div`container px-5 my-10 mx-auto animate__animated animate__bounceInUp`;
-const IntroContainer = tw.div`flex flex-wrap w-full mb-20`;
-const ArticlesBody = tw.div`flex flex-wrap -m-4`;
 const now = new Date();
 
 function BookDetails() {
@@ -68,10 +66,9 @@ function BookDetails() {
   }, [fetchBook]);
 
   return (
-    <div>
-      <ArticlesBody>
+      <div className="flex justify-center">
         {book ? (
-          <div className="bg-gray-100 p-6 rounded-lg">
+          <div className="bg-gray-100 p-6 rounded-lg w-4/5 mt-5">
             <img className="h-40 rounded w-full object-cover object-center mb-6"
               src="https://dummyimage.com/720x400"
               alt="content"
@@ -85,16 +82,7 @@ function BookDetails() {
             <p className="leading-relaxed text-base">
               {book.updated_at}
             </p>
-            <span>
-            <ButtonGroup variant="outlined" aria-label="Loading button group">
-              <Button variant="contained" color="primary" onClick={handleEditClick}>
-                {isEditing ? 'Cancel' : 'Edit'}
-              </Button>
-              <Button variant="contained" color="secondary">
-                Delete
-              </Button>
-            </ButtonGroup>
-              
+            <span>              
             </span>
             {isEditing && (
               <form className="mt-4">
@@ -123,17 +111,34 @@ function BookDetails() {
                   fullWidth
                   margin="normal"
                 />
-                <Button variant="contained" color="primary" onClick={handleSave}>
-                  Save
-                </Button>
               </form>
             )}
+            
+            <ButtonGroup variant="outlined" aria-label="Loading button group">
+            {!isEditing ? (
+              <>
+                <Button variant="contained" color="primary" onClick={handleEditClick}>
+                  {isEditing ? 'Cancel' : 'Edit'}
+                </Button>
+                <Button variant="contained" color="info">
+                  Delete
+                </Button>
+              </>
+              ): <>
+                <Button variant="contained" color="primary" onClick={handleSave}>
+                    Save
+                </Button>
+                <Button variant="contained" color="secondary" onClick={() => {setIsEditing(!isEditing)}}>
+                  Cancel
+                </Button>
+              </>
+            }
+            </ButtonGroup>
           </div>
         ) : (
-          <p>No books available.</p>
+          <LoadingDrip />
         )}
-      </ArticlesBody>
-    </div>
+      </div>
   );
 }
 
