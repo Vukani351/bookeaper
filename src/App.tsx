@@ -10,6 +10,7 @@ import Register from "./Pages/Register"
 import ForgotPassword from "./Pages/ForgotPassword"
 import useAuthStore from './stores/authStore';
 import { useEffect } from "react"
+import BookDetails from "./Pages/BookDetails"
 
 function App() {
   // initialize state
@@ -26,6 +27,7 @@ function App() {
         <Route path="/forgot-password" element={ <ForgotPassword/> } />
         <Route path="/register" element={ <Register/> } />
         <Route path="books" element={ <Books/> } />
+        <Route path="book/:bookId" element={ <BookDetails/> } />
         <Route path="about" element={ <About/> } />
         <Route path="contact" element={ <Contact/> } />
       </Routes>

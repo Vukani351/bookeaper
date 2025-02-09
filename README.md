@@ -36,7 +36,8 @@ This application will help me keep collections of books I intend to purchase and
 
 ## Todo:
 
+- add logic for book image, book review & book share link []
 - Implement more state management with Zustand [X]
-- Enhance styling with Tailwind CSS
-- Create reusable components for the UI
-- Connect with the back-end API for authentication and data synchronization
+- Enhance styling with Tailwind CSS []
+- Create reusable components for the UI []
+- Connect with the back-end API for authentication and data synchronization []
