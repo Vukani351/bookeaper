@@ -4,32 +4,43 @@ import tw from "tailwind-styled-components";
 import useBookStore from '../stores/useBookStore';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { Link } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
   
 const ArticlesContainer = tw.div`container px-5 my-10 mx-auto animate__animated animate__bounceInUp`;
 const IntroContainer = tw.div`flex flex-wrap w-full mb-20`;
 const ArticlesBody = tw.div`flex flex-wrap -m-4`;
+const now = new Date();
 
 function BookDetails() {
-  const { bookId } = useParams();
-  const { fetchBook, book } = useBookStore();
-
+  
   const [isEditing, setIsEditing] = useState(false);
+  const { bookId } = useParams();
   const [formData, setFormData] = useState({
+    id: 0,
     title: '',
     author: '',
+    owner_id: 0,
+    library_id: 0,
     updated_at: '',
+    created_at: '',
   });
+
+  const { 
+    fetchBook,
+    editBook,
+    book
+  } = useBookStore();
   
   const handleEditClick = () => {
     setFormData({
-      title: book?.title || 'not working',
-      author: book?.author || 'not working',
-      updated_at: book?.updated_at || 'not working',
+      id: book?.id || 0,
+      owner_id: book?.owner_id || 1,
+      library_id: book?.library_id || 1,
+      title: book?.title || 'form Data error',
+      author: book?.author || 'form Data error',
+      updated_at: book?.updated_at || 'form Data error',
+      created_at: book?.created_at || 'form Data error',
     });
-
-    console.log("Fetching book...", book, formData); // why it does not get formData
     setIsEditing(!isEditing);
   };
   
@@ -39,8 +50,16 @@ function BookDetails() {
   };
 
   const handleSave = () => {
-    // Implement save logic here
-    console.log('Saving book details:', formData);
+    editBook({
+      id: formData.id || 0,
+      title: formData?.title || "",
+      author: formData?.author || "",
+      owner_id: book?.owner_id || 1,
+      library_id: book?.library_id || 0,
+      updated_at: now.toISOString(),
+      created_at: book?.created_at || '',
+    });
+    fetchBook(formData.id);
     setIsEditing(false);
   };
 

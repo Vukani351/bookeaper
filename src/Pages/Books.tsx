@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import tw from "tailwind-styled-components";
 import useBookStore from '../stores/useBookStore';
 import { useEffect } from "react";
-import { Link, params } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ArticlesContainer = tw.div`container px-5 my-10 mx-auto animate__animated animate__bounceInUp`;
 const IntroContainer = tw.div`flex flex-wrap w-full mb-20`;
@@ -34,7 +34,7 @@ function Books() {
         <ArticlesBody>
           {books ? (
             books.map((book) => (
-              <Link to={"/book/" + book.id} key={book.id} params={{userId: 10}} className="xl:w-1/4 md:w-1/2 p-4">
+              <Link to={"/book/" + book.id} key={book.id} className="xl:w-1/4 md:w-1/2 p-4">
                 <div className="bg-gray-100 p-6 rounded-lg">
                   <img className="h-40 rounded w-full object-cover object-center mb-6"
                     src="https://dummyimage.com/720x400"

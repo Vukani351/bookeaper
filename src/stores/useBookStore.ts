@@ -4,7 +4,7 @@ import axios from "axios";
 const baseUrl = "http://localhost:3000/api/book";
 
 type Book = {
-  id: string;
+  id: number;
   author: string;
   title: string;
   created_at: string;
@@ -19,9 +19,11 @@ type BookState = {
   library_id: number;
   setBooks: (books: Book[]) => void;
   setBook: (book: Book) => void;
+  // getToken: () => void;
   fetchBooks: () => Promise<void>;
   fetchBook: (id: number) => Promise<void>;
   createBook: (book: Book) => Promise<void>;
+  editBook: (book: Book) => Promise<void>;
   getCurrentBook: () => Book | null;
 };
 
@@ -53,6 +55,22 @@ const useBookStore = create<BookState>((set, get) => ({
   createBook: async (book) => {
     try {
       const response = await axios.post(`${baseUrl}/create`, book);
+      set((state) => ({ books: [...state.books, response.data.book] }));
+    } catch (error) {
+      console.error("Failed to create book:", error);
+    }
+  },
+
+  editBook: async (book) => {
+    get
+    try {
+      const response = await axios.put(`${baseUrl}/update`, book, {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem('token')}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("edited book: ", response);
       set((state) => ({ books: [...state.books, response.data.book] }));
     } catch (error) {
       console.error("Failed to create book:", error);
