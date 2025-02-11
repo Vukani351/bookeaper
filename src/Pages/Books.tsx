@@ -45,8 +45,8 @@ function Books() {
             books.map((book) => (
               <Link to={"/book/" + book.id} key={book.id} className="xl:w-1/4 md:w-1/2 p-4">
                 <div className="bg-gray-100 p-6 rounded-lg">
-                  <img className="h-40 rounded w-full object-cover object-center mb-6"
-                    src="https://dummyimage.com/720x400"
+                  <img className="h-80 rounded w-full object-cover object-center mb-6"
+                    src="https://dummyimage.com/800x500"
                     alt="content"
                   />
                   <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
