@@ -25,6 +25,7 @@ type BookState = {
   createBook: (book: Book) => Promise<void>;
   editBook: (book: Book) => Promise<void>;
   getCurrentBook: () => Book | null;
+  // fetchBookDetails: (isbn: string) => Promise<any>;
 };
 
 const useBookStore = create<BookState>((set, get) => ({
@@ -78,6 +79,31 @@ const useBookStore = create<BookState>((set, get) => ({
   },
 
   getCurrentBook: () => get().book,
+
+  // fetchBookDetails: async (isbn: string) => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://openlibrary.org/search/authors.json?q=jordan%20peterson`
+  //     );
+  //     const data = await response.json();
+      
+  //     if (data.totalItems > 0) {
+  //       const book = data.items[0].volumeInfo;
+  //       return {
+  //         title: book.title,
+  //         author: book.authors?.join(", ") || "Unknown Author",
+  //         cover: book.imageLinks?.thumbnail || "",
+  //       };
+  //     } else {
+  //       console.error("Book not found");
+  //       return null;
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching book details:", error);
+  //     return null;
+  //   }
+  // },
+  
 }));
 
 export default useBookStore;
