@@ -24,11 +24,11 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={ <Home/> } />
-        <Route path="/login" element={ <Login/> } />
-        <Route path="/forgot-password" element={ <ForgotPassword/> } />
-        <Route path="/register" element={ <Register/> } />
-        <Route path="books" element={ <Books/> } />
-        <Route path="/add-book" element={ <AddBook/> } />
+        <Route path="login" element={ <Login/> } />
+        <Route path="forgot-password" element={ <ForgotPassword/> } />
+        <Route path="register" element={ <Register/> } />
+        <Route path="library" element={ <Books/> } />
+        <Route path="add-book" element={ <AddBook/> } />
         <Route path="book/:bookId" element={ <BookDetails/> } />
         <Route path="about" element={ <About/> } />
         <Route path="contact" element={ <Contact/> } />

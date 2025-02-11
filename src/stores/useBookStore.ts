@@ -13,9 +13,10 @@ type Book = {
   owner_id: number;
 };
 
-type BookState = {
+export type BookState = {
   books: Book[];
   book: Book | null;
+  owner_id: 1,
   library_id: number;
   setBooks: (books: Book[]) => void;
   setBook: (book: Book) => void;
@@ -25,13 +26,14 @@ type BookState = {
   createBook: (book: Book) => Promise<void>;
   editBook: (book: Book) => Promise<void>;
   getCurrentBook: () => Book | null;
-  // fetchBookDetails: (isbn: string) => Promise<any>;
+  searchBookDetails:(searchQuery: string) => Promise<any>;
 };
 
 const useBookStore = create<BookState>((set, get) => ({
   books: [],
   book: null,
-  library_id: 0,
+  owner_id: 1,
+  library_id: 1,
   setBooks: (books) => set({ books }),
   setBook: (book) => set({ book }),
 
@@ -54,8 +56,14 @@ const useBookStore = create<BookState>((set, get) => ({
   },
 
   createBook: async (book) => {
+    book.owner_id = get().owner_id;
+    book.library_id = get().library_id;
     try {
-      const response = await axios.post(`${baseUrl}/create`, book);
+      const response = await axios.post(`${baseUrl}/create`, book, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        }
+      });
       set((state) => ({ books: [...state.books, response.data.book] }));
     } catch (error) {
       console.error("Failed to create book:", error);
@@ -80,30 +88,20 @@ const useBookStore = create<BookState>((set, get) => ({
 
   getCurrentBook: () => get().book,
 
-  // fetchBookDetails: async (isbn: string) => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://openlibrary.org/search/authors.json?q=jordan%20peterson`
-  //     );
-  //     const data = await response.json();
-      
-  //     if (data.totalItems > 0) {
-  //       const book = data.items[0].volumeInfo;
-  //       return {
-  //         title: book.title,
-  //         author: book.authors?.join(", ") || "Unknown Author",
-  //         cover: book.imageLinks?.thumbnail || "",
-  //       };
-  //     } else {
-  //       console.error("Book not found");
-  //       return null;
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching book details:", error);
-  //     return null;
-  //   }
-  // },
-  
+  searchBookDetails: async (query: string) => {
+    /* fix this to be clean code. */
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=AIzaSyD5sE9FjQkV6tp7MvsuC0iVQgYYMRjOUPA`
+      );
+
+      const data = await response.json();
+      return data.items || [];
+    } catch (error) {
+      console.error("Failed to fetch book details:", error);
+      return [];
+    }
+  },
 }));
 
 export default useBookStore;

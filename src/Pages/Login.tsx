@@ -28,14 +28,12 @@ function Login() {
 
   const handleLoginSuccess = async (googleResponse: any) => {
     const token = googleResponse.credential; // Google token
-    console.log("Google login response:", googleResponse);
     // Use the response to authenticate with your backend.
     // Implement Google login logic here
   };
 
   const handleLoginFailure = (response: any = "There was a Login error.") => {
     // Handle the login failure.
-    console.log("Google login response:", response);
     setError(response.error);
   };
 

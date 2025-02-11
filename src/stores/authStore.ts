@@ -44,7 +44,7 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ user, isAuthenticated: true });
       localStorage.setItem('token', token);
       localStorage.setItem('email', email);
-      window.location.href = '/books';
+      window.location.href = '/library';
     } catch (error) {
       console.error('Login failed:', error);
       throw error;

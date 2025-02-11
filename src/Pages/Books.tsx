@@ -3,6 +3,7 @@ import tw from "tailwind-styled-components";
 import useBookStore from '../stores/useBookStore';
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ButtonGroup } from "@mui/material";
 
 const ArticlesContainer = tw.div`container px-5 my-10 mx-auto animate__animated animate__bounceInUp`;
 const IntroContainer = tw.div`flex flex-wrap w-full mb-20`;
@@ -29,6 +30,14 @@ function Books() {
               heard of them man bun deep jianbing selfies heirloom prism food truck ugh squid celiac humblebrag.
             </p>
           </div>
+          <ButtonGroup variant="outlined" aria-label="Basic button group">
+            <Link to={"/add-book"}>
+              <Button> Add New Book </Button>
+            </Link>
+            <Link to={"/edit-library"}> 
+              <Button>Edit Library</Button>
+            </Link>
+          </ButtonGroup>
         </IntroContainer>
 
         <ArticlesBody>
@@ -50,6 +59,14 @@ function Books() {
                     {book.created_at}
                   </p>
                 </div>
+                {/* <ButtonGroup variant="contained" aria-label="Basic button group">
+                  <Link to={"/borrow"}>
+                    <Button> Borrow </Button>
+                  </Link>
+                  <Link to={"/"}> 
+                    <Button>Details</Button>
+                  </Link>
+                </ButtonGroup> */}
               </Link>
             ))
           ) : (

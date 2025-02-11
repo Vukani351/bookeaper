@@ -44,7 +44,7 @@ function HeaderLG () {
     <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
       <Link to="/login" className="mr-5 hover:text-gray-900">Login</Link>
       {/* <Link to="/libraries" className="mr-5 hover:text-gray-900">Libraries</Link> */}
-      <Link to="/books" className="mr-5 hover:text-gray-900">books</Link>
+      <Link to="/library" className="mr-5 hover:text-gray-900">Library</Link>
       <Link to="/about" className="mr-5 hover:text-gray-900">About</Link>
       <Link to="/contact " className="mr-5 hover:text-gray-900">Contact</Link>
       <Link to="# " className="mr-5 hover:text-gray-900" onClick={handleLogout}>

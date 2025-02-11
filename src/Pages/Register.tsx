@@ -19,7 +19,7 @@ function Register() {
   // test if user is logged in or not:
   useEffect(() => {
     if (isAuthenticated) {
-      window.location.href = '/books';
+      window.location.href = '/library';
     }
   }, [isAuthenticated]);
 
