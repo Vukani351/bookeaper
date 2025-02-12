@@ -57,7 +57,7 @@ const useAuthStore = create<AuthState>((set) => ({
   },
   register: async (username, email, password) => {
     try {
-      const response = await axios.post(`${baseUrl}/register`, { name: username, email: email, password: password });
+      const response = await axios.post(`${baseUrl}/create`, { name: username, email: email, password: password });
       const { user, token } = response.data;
       set({ user, isAuthenticated: true });
       localStorage.setItem('token', token);

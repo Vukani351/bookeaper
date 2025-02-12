@@ -37,7 +37,8 @@ This application will help me keep collections of books I intend to purchase and
 ## Todo:
 
 - add logic to the routes so that you have to login to be able to do certain operations []
-- add the library details & edit library shandic [] 
+- add the library details & edit library shandic []
+- add theme to the library []
 - add logic for book image, book review & book share link []
 - add logic to differentiate books using barcodes n sht. []
 - Implement more state management with Zustand [X]

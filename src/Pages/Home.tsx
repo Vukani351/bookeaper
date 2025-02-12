@@ -124,12 +124,11 @@ function Home() {
               </span>
             </div>
             <p className="leading-relaxed">
-              Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-              sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
-              juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
-              seitan poutine tumeric. Gastropub blue bottle austin listicle
-              pour-over, neutra jean shorts keytar banjo tattooed umami
-              cardigan.
+            Managing your book collection has never been easier! [Your Library System Name] is a simple and efficient personal library system designed to help you organize, track, and manage your books.
+            Whether you’re an avid reader, a collector, or just someone who wants to keep track of borrowed and lent books, our system makes it seamless.
+
+            With features like book cataloging, search functionality, reading status tracking, and borrowing history, you’ll always know what’s on your shelf.
+            Say goodbye to lost books and forgotten loans—your personal library is now just a click away!
             </p>
             <div className="flex mt-6">
               <Link
