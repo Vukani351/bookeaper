@@ -23,8 +23,8 @@ export default function Header() {
 }
 
 function HeaderLG () {
-  
   const { user, logout } = useAuthStore();
+
   const handleLogout = () => {
     logout();
     // Redirect to the login page
@@ -42,14 +42,14 @@ function HeaderLG () {
       </span>
     </Link>
     <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-      <Link to="/login" className="mr-5 hover:text-gray-900">Login</Link>
+      { !user && <Link to="/login" className="mr-5 hover:text-gray-900">Login</Link>}
       {/* <Link to="/libraries" className="mr-5 hover:text-gray-900">Libraries</Link> */}
       <Link to="/library" className="mr-5 hover:text-gray-900">Library</Link>
       <Link to="/about" className="mr-5 hover:text-gray-900">About</Link>
       <Link to="/contact " className="mr-5 hover:text-gray-900">Contact</Link>
-      <Link to="# " className="mr-5 hover:text-gray-900" onClick={handleLogout}>
+      { user && <Link to="# " className="mr-5 hover:text-gray-900" onClick={handleLogout}>
         Logout
-      </Link>
+      </Link>}
     </nav>
     <span className="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
       {/* only open this when the socials are connected */}
@@ -62,13 +62,14 @@ function HeaderLG () {
 function HeaderSM() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const { user, logout } = useAuthStore();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const { user, logout } = useAuthStore();
+  
 
   const handleLogout = () => {
     logout();
@@ -102,9 +103,9 @@ function HeaderSM() {
           </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link to="login">
+          {!user && <Link to="login">
             <Button variant="text">login</Button>
-          </Link>
+          </Link>}
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to="articles">
@@ -122,9 +123,9 @@ function HeaderSM() {
           </Link>
         </MenuItem>
         <MenuItem onClick={handleLogout}>
-          <Link to="#">
+          {user && <Link to="#">
             <Button variant="text">Logout</Button>
-          </Link>
+          </Link>}
         </MenuItem>
       </Menu>
     </div>

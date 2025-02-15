@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import useAuthStore from "../stores/authStore";
 import { useState } from "react";
+import { useAuth } from "../context/authContext";
 
 function Login() {
-  const { login } = useAuthStore();
+  
+  const { user, login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -34,7 +35,7 @@ function Login() {
 
   const handleLoginFailure = (response: any = "There was a Login error.") => {
     // Handle the login failure.
-    setError(response.error);
+    setError("Login failed, please try again.");
   };
 
   return (
@@ -44,6 +45,7 @@ function Login() {
           <h1 className="title-font font-medium text-3xl text-gray-900">
             All people are knowing, growing, creating.
           </h1>
+          {user && <p>Welcome back, {user.username}, with {user.token} </p>}
           <p className="leading-relaxed mt-4">
             Yet we are all here to read, learn and teach.
           </p>
@@ -60,9 +62,12 @@ function Login() {
             </div>
             <div className="relative mb-4">
               <label htmlFor="password" className="leading-7 text-sm text-gray-600">Password</label>
-              <input type="password" id="password" name="password" current-password="********"
+              <input type="password" id="password"
+                name="password"
+                current-password="********"
                 value={formData.password}
                 onChange={handleChange}
+                autoComplete="on"
                 className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
             </div>
             <button className="w-full text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Login</button>

@@ -1,71 +1,56 @@
 import { create } from 'zustand';
+import { persist, devtools, createJSONStorage  } from 'zustand/middleware';
 import axios from 'axios';
+import { AuthState } from '../types/storeState';
 
 const baseUrl = "http://localhost:3000/api/user";
 
-type User = {
-  id: string;
-  username: string;
-  email: string;
-};
-
-type AuthState = {
-  user: User | null;
-  isAuthenticated: boolean;
-  setUser: (user: User) => void;
-  clearUser: () => void;
-  loadUserFromStorage: () => void;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
-  register: (username: string, email: string, password: string) => Promise<void>;
-};
-
-const useAuthStore = create<AuthState>((set) => ({
+const useAuthStore = create<AuthState>()(
+  persist(
+  (set, get) => ({
   user: null,
   isAuthenticated: false,
-  setUser: (user) => set({ user, isAuthenticated: true }),
-  clearUser: () => {
-    localStorage.removeItem('token');
-    set({ user: null, isAuthenticated: false });
-  },
-  loadUserFromStorage: () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        set({ user: {username: '', email: '', id: '0'}, isAuthenticated: false });
-        return;
-    }
-    return localStorage.getItem('user');
 
+  loadUserFromStorage: () => {
+    return get().user;
   },
+
   login: async (email, password) => {
     try {
       const response = await axios.post(`${baseUrl}/login`, { email, password });
-      const { user, token } = response.data; // should get more data than this so we load books, library data n sht.
-      set({ user, isAuthenticated: true });
-      localStorage.setItem('token', token);
-      localStorage.setItem('email', email);
-      window.location.href = '/library';
+      const { token, username, id } = response.data.user; // should get more data than this so we load books, library data n sht.
+      set({ isAuthenticated: true });
+      set({ user: { email: email, id: id, username: username, token: token } });
     } catch (error) {
-      console.error('Login failed:', error);
       throw error;
     }
   },
+
   logout: () => {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     set({ user: null, isAuthenticated: false });
   },
+  
   register: async (username, email, password) => {
     try {
       const response = await axios.post(`${baseUrl}/create`, { name: username, email: email, password: password });
-      const { user, token } = response.data;
-      set({ user, isAuthenticated: true });
-      localStorage.setItem('token', token);
+      const { token, id, name } = response.data.user;
+      set({ isAuthenticated: true });
+      set({ user: { email: email, id: id, username: name, token: token } });
     } catch (error) {
       console.error('Registration failed:', error);
       throw error;
     }
   },
+
+}),
+{
+  name: "auth-storage",
+  storage: createJSONStorage(() => sessionStorage),
 }));
 
+// persist the created state
+persist(useAuthStore, {name: "basket"})
+devtools(useAuthStore);
 export default useAuthStore;
