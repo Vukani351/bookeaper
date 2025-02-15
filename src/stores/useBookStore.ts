@@ -1,17 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
+import { Book } from "../types/storeState";
 
 const baseUrl = "http://localhost:3000/api/book";
-
-type Book = {
-  id: number;
-  author: string;
-  title: string;
-  created_at: string;
-  updated_at: string;
-  library_id: number;
-  owner_id: number;
-};
 
 export type BookState = {
   books: Book[];
@@ -61,10 +52,10 @@ const useBookStore = create<BookState>((set, get) => ({
     try {
       const response = await axios.post(`${baseUrl}/create`, book, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('auth-storage')!).state?.user?.token}`,
         }
       });
-      set((state) => ({ books: [...state.books, response.data.book] }));
+      // set((state) => ({ books: [...state.books, response.data.book] }));
     } catch (error) {
       console.error("Failed to create book:", error);
     }
@@ -75,7 +66,7 @@ const useBookStore = create<BookState>((set, get) => ({
     try {
       const response = await axios.put(`${baseUrl}/update`, book, {
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem('token')}`,
+          "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
           "Content-Type": "application/json",
         },
       });

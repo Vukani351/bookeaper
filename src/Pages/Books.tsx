@@ -14,8 +14,7 @@ function Books() {
 
   useEffect(() => {
     fetchBooks();
-    console.log("Fetching books...", books);
-  }, [fetchBooks]);
+  }, []);
 
   return (
     <div className="text-gray-600 body-font">
@@ -51,6 +50,9 @@ function Books() {
                   />
                   <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
                     {book.author}
+                  </h3>
+                  <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
+                    {book.description}
                   </h3>
                   <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
                     {book.title}

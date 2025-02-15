@@ -1,11 +1,13 @@
 import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
 import useBookStore from '../stores/useBookStore';
+import { Link } from 'react-router-dom';
 
 type Book = {
     id: number;
     author: string;
     title: string;
+    description: string;
     created_at: string;
     updated_at: string;
     library_id: number;
@@ -13,12 +15,14 @@ type Book = {
   };
 
 function parseBook(raw_book: any): Book {
+  console.log("raw_book", raw_book);
     return {
         id: 0,
         library_id: 0,
+        description: raw_book?.description || "",
         owner_id: 0,
-        author: raw_book.authors[0], // change this to be array, front end and back end
-        title: raw_book.title,
+        author: raw_book?.authors[0], // change this to be array, front end and back end
+        title: raw_book?.title,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
     }
@@ -118,21 +122,23 @@ const AddBook = () => {
               title: {book.volumeInfo.title}
             </h1>
             <h3 className="text-lg text-gray-900 font-medium title-font mb-4">
-            subtitle: {book.volumeInfo.subtitle}
+              subtitle: {book.volumeInfo?.subtitle}
             </h3>
+            <p>
+              Authors: {book.volumeInfo.authors}</p> 
             <p className="leading-relaxed text-base">
-                published Date: {book.volumeInfo.publishedDate}
+               published Date: {book.volumeInfo.publishedDate}
             </p>
             <p className="leading-relaxed text-base">
-              Work Count: {book.volumeInfo.work_count}
+              Maturity Rating: {book.volumeInfo.maturityRating}
             </p>
             <p className="leading-relaxed text-base">
-              Top Subjects:
+              Info Link: <Link to={book?.volumeInfo?.infoLink}> <i>link</i></Link>
             </p>
-            <p className="leading-relaxed text-base">
-              Alternate Names:
+            <p className="leading-relaxed text-base truncate">
+              Description: {book.volumeInfo.description}
             </p>
-            <p>{book.volumeInfo.authors}</p>
+            
             <Button color="secondary" onClick={addItem(book.volumeInfo)}>Add Item</Button>
           </div>
         ))}

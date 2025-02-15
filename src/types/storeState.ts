@@ -2,6 +2,7 @@ type Book = {
   id: number;
   author: string;
   title: string;
+  description?: string;
   created_at: string;
   updated_at: string;
   library_id: number;
