@@ -10,6 +10,8 @@ import ForgotPassword from "./Pages/ForgotPassword"
 import useAuthStore from './stores/authStore';
 import BookDetails from "./Pages/BookDetails"
 import AddBook from "./Pages/AddBook"
+import Profile from "./Pages/Profile"
+import LibrarySettings from "./Pages/library/LibrarySettings"
 
 function App() {
   // initialize state
@@ -23,6 +25,8 @@ function App() {
         <Route path="forgot-password" element={ <ForgotPassword/> } />
         <Route path="register" element={ <Register/> } />
         <Route path="library" element={ <Books/> } />
+        <Route path="profile" element={ <Profile/> } />
+        <Route path="library/settings" element={ <LibrarySettings/> } />
         <Route path="add-book" element={ <AddBook/> } />
         <Route path="book/:bookId" element={ <BookDetails/> } />
         <Route path="about" element={ <About/> } />

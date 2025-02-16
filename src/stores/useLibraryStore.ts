@@ -19,6 +19,7 @@ type LibraryState = {
   libraries: Library[];
   selectedLibraryId: string | null;
   addLibrary: (name: string) => void;
+  getLibraryDetails: (name: string) => void;
   addBook: (libraryId: string, book: Book) => void;
   editBook: (libraryId: string, bookId: string, updatedBook: Partial<Book>) => void;
   deleteBook: (libraryId: string, bookId: string) => void;

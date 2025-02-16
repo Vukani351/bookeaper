@@ -33,8 +33,8 @@ function Books() {
             <Link to={"/add-book"}>
               <Button> Add New Book </Button>
             </Link>
-            <Link to={"/edit-library"}> 
-              <Button>Edit Library</Button>
+            <Link to={"/library/settings"}> 
+              <Button>Library Details</Button>
             </Link>
           </ButtonGroup>
         </IntroContainer>

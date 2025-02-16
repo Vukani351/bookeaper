@@ -47,9 +47,14 @@ function HeaderLG () {
       <Link to="/library" className="mr-5 hover:text-gray-900">Library</Link>
       <Link to="/about" className="mr-5 hover:text-gray-900">About</Link>
       <Link to="/contact " className="mr-5 hover:text-gray-900">Contact</Link>
-      { user && <Link to="# " className="mr-5 hover:text-gray-900" onClick={handleLogout}>
-        Logout
-      </Link>}
+      { user && <>
+          <Link to="/profile" className="mr-5 hover:text-gray-900">
+            Profile
+          </Link>
+          <Link to="#" className="mr-5 hover:text-gray-900" onClick={handleLogout}>
+            Logout
+          </Link>
+      </>}
     </nav>
     <span className="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
       {/* only open this when the socials are connected */}
@@ -122,11 +127,19 @@ function HeaderSM() {
             <Button variant="text">about</Button>
           </Link>
         </MenuItem>
-        <MenuItem onClick={handleLogout}>
-          {user && <Link to="#">
-            <Button variant="text">Logout</Button>
-          </Link>}
-        </MenuItem>
+        {user && <>
+          <MenuItem >
+            <Link to="#">
+              <Button variant="text">Profile</Button>
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>
+            <Link to="#">
+              <Button variant="text">Logout</Button>
+            </Link>
+          </MenuItem>
+        </>
+        }
       </Menu>
     </div>
   );
