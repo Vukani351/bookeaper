@@ -26,7 +26,7 @@ function App() {
         <Route path="register" element={ <Register/> } />
         <Route path="library" element={ <Books/> } />
         <Route path="profile" element={ <Profile/> } />
-        <Route path="library/settings" element={ <LibrarySettings/> } />
+        <Route path="library/settings/:id" element={ <LibrarySettings/> } />
         <Route path="add-book" element={ <AddBook/> } />
         <Route path="book/:bookId" element={ <BookDetails/> } />
         <Route path="about" element={ <About/> } />

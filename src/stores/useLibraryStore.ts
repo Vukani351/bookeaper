@@ -1,27 +1,17 @@
 import { create } from "zustand";
+import axios from "axios";
+import { Book, Library } from "../types/storeState";
 
-type Book = {
-  id: string;
-  title: string;
-  author: string;
-  status: "available" | "borrowed";
-  borrower?: string; // Name of the person who borrowed it
-  borrowedDate?: string;
-};
 
-type Library = {
-  id: string;
-  name: string;
-  books: Book[];
-};
+const baseUrl = "http://localhost:3000/api/library";
 
 type LibraryState = {
   libraries: Library[];
+  currentLibrary: Library;
   selectedLibraryId: string | null;
   addLibrary: (name: string) => void;
-  getLibraryDetails: (name: string) => void;
-  addBook: (libraryId: string, book: Book) => void;
-  editBook: (libraryId: string, bookId: string, updatedBook: Partial<Book>) => void;
+  fetchLibraryDetails: (libraryId: string) => Promise<Library | undefined>;
+  editLibrary: (updatedLibrary: Library) => void;
   deleteBook: (libraryId: string, bookId: string) => void;
   borrowBook: (libraryId: string, bookId: string, borrower: string) => void;
   returnBook: (libraryId: string, bookId: string) => void;
@@ -31,65 +21,58 @@ type LibraryState = {
 export const useLibraryStore = create<LibraryState>((set) => ({
   libraries: [],
   selectedLibraryId: null,
-  
+  currentLibrary: {
+    id: "", name: "",
+    description: "",
+    user_id: 0
+  },
+
   addLibrary: (name) => set((state) => ({
-    libraries: [...state.libraries, { id: Date.now().toString(), name, books: [] }]
+    libraries: [...state.libraries, { id: Date.now().toString(), name, description: "", user_id: 1 }]
   })),
 
-  addBook: (libraryId, book) => set((state) => ({
-    libraries: state.libraries.map(library =>
-      library.id === libraryId ? { ...library, books: [...library.books, book] } : library
-    )
-  })),
+  editLibrary: async (updatedLibrary) => {
+    try {
+      const response = await axios.put(`${baseUrl}/edit`, updatedLibrary, {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('auth-storage')!).state?.user?.token}`,
+        }
+      });
 
-  editBook: (libraryId, bookId, updatedBook) => set((state) => ({
-    libraries: state.libraries.map(library =>
-      library.id === libraryId
-        ? {
-            ...library,
-            books: library.books.map(book =>
-              book.id === bookId ? { ...book, ...updatedBook } : book
-            )
-          }
-        : library
-    )
-  })),
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch library details:", error);
+      return error;
+    }
+  },
 
   deleteBook: (libraryId, bookId) => set((state) => ({
-    libraries: state.libraries.map(library =>
-      library.id === libraryId
-        ? { ...library, books: library.books.filter(book => book.id !== bookId) }
-        : library
-    )
+    
   })),
 
   borrowBook: (libraryId, bookId, borrower) => set((state) => ({
-    libraries: state.libraries.map(library =>
-      library.id === libraryId
-        ? {
-            ...library,
-            books: library.books.map(book =>
-              book.id === bookId
-                ? { ...book, status: "borrowed", borrower, borrowedDate: new Date().toISOString() }
-                : book
-            )
-          }
-        : library
-    )
+   
   })),
 
   returnBook: (libraryId, bookId) => set((state) => ({
-    libraries: state.libraries.map(library =>
-      library.id === libraryId
-        ? {
-            ...library,
-            books: library.books.map(book =>
-              book.id === bookId ? { ...book, status: "available", borrower: undefined, borrowedDate: undefined } : book
-            )
-          }
-        : library
-    )
+    
   })),
 
   selectLibrary: (libraryId) => set(() => ({ selectedLibraryId: libraryId })),
+
+  fetchLibraryDetails: async (libraryId) => {
+    try {
+      const response = await axios.get(`${baseUrl}/${libraryId}`, {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('auth-storage')!).state?.user?.token}`,
+        }
+      });
+      set({ currentLibrary: response.data });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch library details:", error);
+      return undefined;
+    }
+  },
 }));
+

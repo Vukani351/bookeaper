@@ -1,13 +1,27 @@
+// type Book = {
+//   id: number;
+//   author: string;
+//   title: string;
+//   description?: string;
+//   created_at: string;
+//   updated_at: string;
+//   library_id: number;
+//   owner_id: number;
+// };
 type Book = {
-  id: number;
-  author: string;
+  id: string;
   title: string;
+  author: string;
   description?: string;
+  status: "available" | "borrowed";
+  borrower?: string; // Name of the person who borrowed it
+  borrowedDate?: string;
   created_at: string;
   updated_at: string;
   library_id: number;
   owner_id: number;
 };
+
 
 type BookState = {
   books: Book[];
@@ -40,4 +54,11 @@ type User = {
     token?: string;
 };
 
-export type { User, AuthState, BookState, Book };
+type Library = {
+  id: string;
+  name: string;
+  description: string;
+  user_id: number;
+};
+
+export type { User, AuthState, BookState, Book, Library };

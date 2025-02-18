@@ -1,9 +1,11 @@
 import Button from "@mui/material/Button";
 import tw from "tailwind-styled-components";
 import useBookStore from '../stores/useBookStore';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ButtonGroup } from "@mui/material";
+import { useLibraryStore } from "../stores/useLibraryStore";
+import { Library } from "../types/storeState";
 
 const ArticlesContainer = tw.div`container px-5 my-10 mx-auto animate__animated animate__bounceInUp`;
 const IntroContainer = tw.div`flex flex-wrap w-full mb-20`;
@@ -11,9 +13,16 @@ const ArticlesBody = tw.div`flex flex-wrap -m-4`;
 
 function Books() {
   const { fetchBooks, books } = useBookStore();
+  const { fetchLibraryDetails } = useLibraryStore();
+  const [library, setLibrary] = useState<Library | null>(null);
 
   useEffect(() => {
     fetchBooks();
+    fetchLibraryDetails("1").then((library) => {
+      if (library) {
+        setLibrary(library);
+      }
+    });
   }, []);
 
   return (
@@ -33,7 +42,7 @@ function Books() {
             <Link to={"/add-book"}>
               <Button> Add New Book </Button>
             </Link>
-            <Link to={"/library/settings"}> 
+            <Link to={`/library/settings/${library?.id}`}> 
               <Button>Library Details</Button>
             </Link>
           </ButtonGroup>
