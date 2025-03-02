@@ -2,29 +2,20 @@ import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
 import useBookStore from '../stores/useBookStore';
 import { Link } from 'react-router-dom';
-
-type Book = {
-    id: number;
-    author: string;
-    title: string;
-    description: string;
-    created_at: string;
-    updated_at: string;
-    library_id: number;
-    owner_id: number;
-  };
+import { Book } from '../types/storeState';
 
 function parseBook(raw_book: any): Book {
   console.log("raw_book", raw_book);
     return {
-        id: 0,
         library_id: 0,
+        thumbnail: raw_book?.imageLinks?.thumbnail || "",
         description: raw_book?.description || "",
         owner_id: 0,
         author: raw_book?.authors[0], // change this to be array, front end and back end
         title: raw_book?.title,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        status: "available",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     }
 }
 
@@ -51,6 +42,7 @@ const AddBook = () => {
 
   const addItem = (raw_book: any) => () => {
     const parsed_book = parseBook(raw_book);
+    console.log("parsed_book", parsed_book);
     createBook(parsed_book);
   }
 
@@ -64,28 +56,22 @@ const AddBook = () => {
     e.preventDefault();
     const newBook = {
       ...formData,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       library_id: 0,
-      owner_id: 0,
     };
+    console.log(newBook);
     /* remove this when we take publishedDate & image url */
-    const parsedBook = { 
-        id: 0,
-        owner_id: 0,
+    const parsedBook = {
         library_id: 0,
+        thumbnail: "",
+        desciption: "",
         title: newBook.title,
         author: newBook.author,
-        created_at: "",
-        updated_at: ""
+        createdAt: "",
+        updatedAt: ""
     }; 
-    await createBook(parsedBook);
-    // setFormData({
-    //   title: '',
-    //   author: '',
-    //   publishedDate: '',
-    //   imageUrl: '',
-    // });
+    // await createBook(parsedBook);
   };
 
   useEffect(() => {

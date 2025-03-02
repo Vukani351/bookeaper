@@ -3,7 +3,7 @@ import axios from "axios";
 import { Book, Library } from "../types/storeState";
 
 
-const baseUrl = "http://localhost:3000/api/library";
+const baseUrl = "http://localhost:3000/library";
 
 type LibraryState = {
   libraries: Library[];
@@ -35,7 +35,7 @@ export const useLibraryStore = create<LibraryState>((set) => ({
     try {
       const response = await axios.put(`${baseUrl}/edit`, updatedLibrary, {
         headers: {
-          'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('auth-storage')!).state?.user?.token}`,
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('auth-storage')!).state?.user?.token}`,
         }
       });
 
@@ -64,7 +64,7 @@ export const useLibraryStore = create<LibraryState>((set) => ({
     try {
       const response = await axios.get(`${baseUrl}/${libraryId}`, {
         headers: {
-          'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('auth-storage')!).state?.user?.token}`,
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('auth-storage')!).state?.user?.token}`,
         }
       });
       set({ currentLibrary: response.data });

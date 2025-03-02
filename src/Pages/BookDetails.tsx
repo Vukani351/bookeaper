@@ -18,8 +18,8 @@ function BookDetails() {
     author: '',
     owner_id: 0,
     library_id: 0,
-    updated_at: '',
-    created_at: '',
+    updatedAt: '',
+    thumbnail: '',
   });
 
   const { 
@@ -33,11 +33,13 @@ function BookDetails() {
       id: book?.id || 0,
       owner_id: book?.owner_id || 1,
       library_id: book?.library_id || 1,
-      title: book?.title || 'form Data error',
-      author: book?.author || 'form Data error',
-      updated_at: book?.updated_at || 'form Data error',
-      created_at: book?.created_at || 'form Data error',
+      title: book?.title || 'book title error',
+      author: book?.author || 'book author error',
+      updatedAt: book?.updatedAt || 'updated @ Data error',
+      createdAt: book?.createdAt || 'created @ Data error',
+      thumbnail: book?.thumbnail || 'thumbnail Data error',
     });
+    console.log("dat: ", book);
     setIsEditing(!isEditing);
   };
   
@@ -53,8 +55,9 @@ function BookDetails() {
       author: formData?.author || "",
       owner_id: book?.owner_id || 1,
       library_id: book?.library_id || 0,
-      updated_at: now.toISOString(),
-      created_at: book?.created_at || '',
+      updatedAt: now.toISOString(),
+      createdAt: book?.createdAt || '',
+      thumbnail: book?.thumbnail || '',
     });
     fetchBook(formData.id);
     setIsEditing(false);
@@ -69,7 +72,7 @@ function BookDetails() {
         {book ? (
           <div className="bg-gray-100 p-6 rounded-lg w-4/5 mt-5">
             <img className="h-40 rounded w-full object-cover object-center mb-6"
-              src="https://dummyimage.com/720x400"
+            src={book?.thumbnail || "https://dummyimage.com/720x400"}
               alt="content"
             />
             <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
@@ -79,7 +82,7 @@ function BookDetails() {
               {book.title}
             </h2>
             <p className="leading-relaxed text-base">
-              {book.updated_at}
+              {book.updatedAt}
             </p>
             <span>              
             </span>
@@ -103,9 +106,9 @@ function BookDetails() {
                 />
                 {/* change this to be something important. */}
                 <TextField
-                  label="Updated At"
-                  name="updated_at"
-                  value={formData.updated_at}
+                  label="Thumbnail"
+                  name="thumbnail"
+                  value={formData.thumbnail}
                   onChange={handleChange}
                   fullWidth
                   margin="normal"

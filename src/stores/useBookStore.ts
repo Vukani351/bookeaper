@@ -1,24 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
-import { Book } from "../types/storeState";
+import { BookState } from "../types/storeState";
 
-const baseUrl = "http://localhost:3000/api/book";
-
-export type BookState = {
-  books: Book[];
-  book: Book | null;
-  owner_id: 1,
-  library_id: number;
-  setBooks: (books: Book[]) => void;
-  setBook: (book: Book) => void;
-  // getToken: () => void;
-  fetchBooks: () => Promise<void>;
-  fetchBook: (id: number) => Promise<void>;
-  createBook: (book: Book) => Promise<void>;
-  editBook: (book: Book) => Promise<void>;
-  getCurrentBook: () => Book | null;
-  searchBookDetails:(searchQuery: string) => Promise<any>;
-};
+const baseUrl = "http://localhost:3000/book";
 
 const useBookStore = create<BookState>((set, get) => ({
   books: [],
@@ -30,7 +14,7 @@ const useBookStore = create<BookState>((set, get) => ({
 
   fetchBooks: async () => {
     try {
-      const response = await axios.get(baseUrl);
+      const response = await axios.get(`${baseUrl}/${get().library_id}`);
       set({ books: response.data }); // Store book list
     } catch (error) {
       console.error("Failed to fetch books:", error);
@@ -47,15 +31,17 @@ const useBookStore = create<BookState>((set, get) => ({
   },
 
   createBook: async (book) => {
-    book.owner_id = get().owner_id;
-    book.library_id = get().library_id;
+    
     try {
-      const response = await axios.post(`${baseUrl}/create`, book, {
+      book.library_id = get().library_id ?? 1;
+      book.owner_id = get().book?.owner_id ?? 1;
+      const response = await axios.post(`${baseUrl}/new`, book, {
         headers: {
-          'Authorization': `Bearer ${JSON.parse(sessionStorage.getItem('auth-storage')!).state?.user?.token}`,
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('auth-storage')!)?.state?.user?.token}`,
         }
       });
-      // set((state) => ({ books: [...state.books, response.data.book] }));
+      set((state) => ({ books: [...state.books, response.data.book] }));
+      window.location.href = '/library';
     } catch (error) {
       console.error("Failed to create book:", error);
     }

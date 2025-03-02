@@ -1,27 +1,17 @@
-// type Book = {
-//   id: number;
-//   author: string;
-//   title: string;
-//   description?: string;
-//   created_at: string;
-//   updated_at: string;
-//   library_id: number;
-//   owner_id: number;
-// };
 type Book = {
-  id: string;
+  id?: string;
   title: string;
   author: string;
   description?: string;
   status: "available" | "borrowed";
   borrower?: string; // Name of the person who borrowed it
   borrowedDate?: string;
-  created_at: string;
-  updated_at: string;
+  thumbnail?: string;
+  createdAt: string;
+  updatedAt: string;
   library_id: number;
   owner_id: number;
 };
-
 
 type BookState = {
   books: Book[];
@@ -29,7 +19,6 @@ type BookState = {
   library_id: number;
   setBooks: (books: Book[]) => void;
   setBook: (book: Book) => void;
-  // getToken: () => void;
   fetchBooks: () => Promise<void>;
   fetchBook: (id: number) => Promise<void>;
   createBook: (book: Book) => Promise<void>;
@@ -45,10 +34,12 @@ type AuthState = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   register: (username: string, email: string, password: string) => Promise<void>;
+  getProfile: (userId: string) => Promise<any>;
+  updateUser: (userData: any) => Promise<any>;
 };
 
 type User = {
-    id: string;
+    id?: string;
     username: string;
     email: string;
     token?: string;

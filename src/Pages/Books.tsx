@@ -18,6 +18,10 @@ function Books() {
 
   useEffect(() => {
     fetchBooks();
+    /*
+    * TODO: 
+    * Get the library for this user -> so use the context
+    * */
     fetchLibraryDetails("1").then((library) => {
       if (library) {
         setLibrary(library);
@@ -53,21 +57,21 @@ function Books() {
             books.map((book) => (
               <Link to={"/book/" + book.id} key={book.id} className="xl:w-1/4 md:w-1/2 p-4">
                 <div className="bg-gray-100 p-6 rounded-lg">
-                  <img className="h-80 rounded w-full object-cover object-center mb-6"
-                    src="https://dummyimage.com/800x500"
+                  <img className="h-80 rounded w-full object-fit object-center mb-6"
+                    src={book.thumbnail}
                     alt="content"
                   />
                   <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
                     {book.author}
                   </h3>
-                  <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
+                  <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font text-ellipsis h-20 overflow-hidden">
                     {book.description}
                   </h3>
                   <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
                     {book.title}
                   </h2>
                   <p className="leading-relaxed text-base">
-                    {book.created_at}
+                    {book.createdAt}
                   </p>
                 </div>
                 {/* <ButtonGroup variant="contained" aria-label="Basic button group">
