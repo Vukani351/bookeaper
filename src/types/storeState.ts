@@ -7,8 +7,6 @@ type Book = {
   borrower?: string; // Name of the person who borrowed it
   borrowedDate?: string;
   thumbnail?: string;
-  createdAt: string;
-  updatedAt: string;
   library_id: number;
   owner_id: number;
 };

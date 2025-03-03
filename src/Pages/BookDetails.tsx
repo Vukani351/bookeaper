@@ -13,15 +13,14 @@ function BookDetails() {
   const [isEditing, setIsEditing] = useState(false);
   const { bookId } = useParams();
   const [formData, setFormData] = useState({
-    id: 0,
+    id: '0',
     title: '',
     author: '',
     owner_id: 0,
     library_id: 0,
-    updatedAt: '',
+    status: "available",
     thumbnail: '',
   });
-
   const { 
     fetchBook,
     editBook,
@@ -30,16 +29,14 @@ function BookDetails() {
   
   const handleEditClick = () => {
     setFormData({
-      id: book?.id || 0,
+      id: book?.id ?? '0',
       owner_id: book?.owner_id || 1,
       library_id: book?.library_id || 1,
+      status: book?.status || "available",
       title: book?.title || 'book title error',
       author: book?.author || 'book author error',
-      updatedAt: book?.updatedAt || 'updated @ Data error',
-      createdAt: book?.createdAt || 'created @ Data error',
       thumbnail: book?.thumbnail || 'thumbnail Data error',
     });
-    console.log("dat: ", book);
     setIsEditing(!isEditing);
   };
   
@@ -50,28 +47,27 @@ function BookDetails() {
 
   const handleSave = () => {
     editBook({
-      id: formData.id || 0,
+      id: formData.id || '0',
       title: formData?.title || "",
       author: formData?.author || "",
       owner_id: book?.owner_id || 1,
       library_id: book?.library_id || 0,
-      updatedAt: now.toISOString(),
-      createdAt: book?.createdAt || '',
-      thumbnail: book?.thumbnail || '',
+      thumbnail: formData?.thumbnail || '',
+      status: "available",
     });
-    fetchBook(formData.id);
+
     setIsEditing(false);
   };
 
   useEffect(() => {
     fetchBook(Number(bookId));
-  }, [fetchBook]);
+  }, []);
 
   return (
       <div className="flex justify-center">
         {book ? (
           <div className="bg-gray-100 p-6 rounded-lg w-4/5 mt-5">
-            <img className="h-40 rounded w-full object-cover object-center mb-6"
+            <img className="h-40 rounded w-full object-cover object-cover mb-6"
             src={book?.thumbnail || "https://dummyimage.com/720x400"}
               alt="content"
             />
@@ -82,7 +78,7 @@ function BookDetails() {
               {book.title}
             </h2>
             <p className="leading-relaxed text-base">
-              {book.updatedAt}
+              {book.description}
             </p>
             <span>              
             </span>

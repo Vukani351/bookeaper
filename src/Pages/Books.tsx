@@ -74,14 +74,16 @@ function Books() {
                     {book.createdAt}
                   </p>
                 </div>
-                {/* <ButtonGroup variant="contained" aria-label="Basic button group">
-                  <Link to={"/borrow"}>
-                    <Button> Borrow </Button>
-                  </Link>
-                  <Link to={"/"}> 
-                    <Button>Details</Button>
-                  </Link>
-                </ButtonGroup> */}
+                {/*
+                  <ButtonGroup variant="contained" aria-label="Basic button group">
+                    <Link to={"/borrow"}>
+                      <Button> Borrow </Button>
+                    </Link>
+                    <Link to={"/"}> 
+                      <Button>Details</Button>
+                    </Link>
+                  </ButtonGroup>
+                */}
               </Link>
             ))
           ) : (
