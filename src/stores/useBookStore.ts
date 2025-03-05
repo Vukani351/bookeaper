@@ -17,7 +17,12 @@ const useBookStore = create<BookState>((set, get) => ({
 
   fetchBooks: async () => {
     try {
-      const response = await axios.get(`${baseUrl}/library/${get().library_id}`);
+      const response = await axios.get(`${baseUrl}/library/${get().library_id}`, {
+        headers: {
+          "Authorization": `Bearer ${JSON.parse(localStorage.getItem('auth-storage')!)?.state?.user?.token}`,
+          "Content-Type": "application/json",
+        },
+      });
       set({ books: response.data }); // Store book list
     } catch (error) {
       console.error("Failed to fetch books:", error);
@@ -26,7 +31,12 @@ const useBookStore = create<BookState>((set, get) => ({
 
   fetchBook: async (bookId) => {
     try {
-      const response = await axios.get(`${baseUrl}/${bookId}`);
+      const response = await axios.get(`${baseUrl}/${bookId}`, {
+        headers: {
+          "Authorization": `Bearer ${JSON.parse(localStorage.getItem('auth-storage')!)?.state?.user?.token}`,
+          "Content-Type": "application/json",
+        },
+      });
       set({ book: response.data });
     } catch (error) {
       console.error("Failed to fetch book:", error);
@@ -56,8 +66,7 @@ const useBookStore = create<BookState>((set, get) => ({
         headers: {
           "Authorization": `Bearer ${JSON.parse(localStorage.getItem('auth-storage')!)?.state?.user?.token}`,
           "Content-Type": "application/json",
-        },
-      });
+        }});
       set((state) => ({ books: [...state.books, response.data.book] }));
       window.location.href = '/library';
     } catch (error) {

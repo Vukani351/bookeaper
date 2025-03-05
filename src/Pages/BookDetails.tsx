@@ -20,6 +20,7 @@ function BookDetails() {
     library_id: 0,
     status: "available",
     thumbnail: '',
+    description: '',
   });
   const { 
     fetchBook,
@@ -36,6 +37,7 @@ function BookDetails() {
       title: book?.title || 'book title error',
       author: book?.author || 'book author error',
       thumbnail: book?.thumbnail || 'thumbnail Data error',
+      description: book?.description || 'description Data error',
     });
     setIsEditing(!isEditing);
   };
@@ -54,6 +56,7 @@ function BookDetails() {
       library_id: book?.library_id || 0,
       thumbnail: formData?.thumbnail || '',
       status: "available",
+      description: formData?.description || '',
     });
 
     setIsEditing(false);
@@ -100,7 +103,6 @@ function BookDetails() {
                   fullWidth
                   margin="normal"
                 />
-                {/* change this to be something important. */}
                 <TextField
                   label="Thumbnail"
                   name="thumbnail"
@@ -108,6 +110,16 @@ function BookDetails() {
                   onChange={handleChange}
                   fullWidth
                   margin="normal"
+                />
+                <TextField
+                  label="Description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                  multiline
+                  rows={4}
                 />
               </form>
             )}
